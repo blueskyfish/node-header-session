@@ -1,7 +1,7 @@
 {
   "name": "node-rest-header-session",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "main": "index.js",
   "dependencies": {
     "body-parser": "1.13.1",

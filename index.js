@@ -9,6 +9,9 @@ var
   extend = require('extend'),
   UUID = require('simple-uuid');
 
+var
+  utils = require('./lib/utils');
+
 // constants
 var
   HEADER_NAME = 'x-rest-session-token',
@@ -19,10 +22,7 @@ var
   defaultOptions = {
     name: HEADER_NAME,
     debug: true,
-    metrics: {
-      enable: true,
-      url: METRICS_URL
-    }
+    metricsUrl: METRICS_URL
   };
 
 // Cache for the rest header
@@ -37,6 +37,16 @@ function _prepareOptions (options) {
 
   if (options) {
     tempOptions = extend(false, tempOptions, options);
+  }
+  
+  if (!utils.isFunction(tempOptions.genToken)) {
+    if (tempOptions.debug) {
+      console.log('missing the genToken() function in the options');
+    }
+    
+    tempOptions.genToken = function () {
+      return UUID();
+    };
   }
 
   return tempOptions;
@@ -67,7 +77,8 @@ function _initialize(options) {
 
     if (!token) {
       // create a new token
-      token = UUID();
+      token = options.genToken();
+      
       if (options.debug) {
         console.log('create new token %s', token);
       }
@@ -131,11 +142,11 @@ module.exports = function (app, options) {
 
   app.use(_initialize(thisOptions));
 
-  if (thisOptions.metrics && thisOptions.metrics.enable === true) {
+  if (utils.isString(thisOptions.metricsUrl)) {
     // register the metrics handler
 
     var
-      url = thisOptions.metrics.url;
+      url = thisOptions.metricsUrl;
 
     if (!url) {
       thisOptions.metrics.url = url = METRICS_URL;
