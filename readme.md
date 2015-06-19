@@ -19,9 +19,9 @@ var
 restHeader(app, {
 	name: 'x-this-is-a-restful-header-field',
 	debug: true,
-	metrics: {
-		enable: true,
-		url: '/metrics/rest-header'
+	metricsUrl: '/metrics/rest-header'
+	genToken: function () {
+		return // generate a unique id / token (may UUID())
 	}
 });
 
