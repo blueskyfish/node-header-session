@@ -6,8 +6,7 @@
 
 // require external modules
 var
-  extend = require('extend'),
-  UUID = require('simple-uuid');
+  extend = require('extend');
 
 var
   utils = require('./lib/utils');
@@ -45,7 +44,7 @@ function _prepareOptions (options) {
     }
     
     tempOptions.genToken = function () {
-      return UUID();
+      return utils.generator();
     };
   }
 
