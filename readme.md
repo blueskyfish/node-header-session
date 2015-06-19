@@ -10,7 +10,7 @@ The middleware creates a simple session management via a HTTP header field that 
 ```js
 var
 	express = require('express'),
-	bodyParser = require('body-parser),
+	bodyParser = require('body-parser'),
 	restHeader = require('node-rest-header-session');
 
 var
@@ -36,6 +36,7 @@ app.get('/', function (req, res) {
 		count: count
 	});
 });
+```
 
 
 ## Options
@@ -61,6 +62,7 @@ metrics.url      | string   | The url für the metrics information (**Default** 
   * and more...
 * create a own token generator function
 
+If an important feature is missing or you find an error, please create an Issue <https://github.com/blueskyfish/node-rest-header-session/issues>
 
 
 ## License
