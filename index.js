@@ -9,7 +9,8 @@ var
   extend = require('extend');
 
 var
-  utils = require('./lib/utils');
+  utils = require('./lib/utils'),
+  Session = require('./lib/session');
 
 // constants
 var
@@ -90,14 +91,34 @@ function _initialize(options) {
 
     if (!restSession) {
       // session is not available
-      restSession = cache[token] = {};
+      restSession = cache[token] = new Session(token);
+      
       if (options.debug) {
         console.log('create a restSession to %s', token);
       }
     }
 
     // update the request object
-    req.restSession = restSession;
+    req.rest = {
+      token: token,
+      session: restSession.values()
+    };
+    
+    // replace the response.end method...
+    var
+      _end = res.end;
+    
+    res.end = function (data, encoding) {
+      
+      if (options.debug) {
+        console.log('restore the session values %s', token);
+      }
+      
+      restSession.touch();
+      restSession.values(req.rest.session);
+      
+      _end.call(res, data, encoding);
+    };
 
     next();
   };
@@ -119,7 +140,14 @@ function _handleMetrics(options, req, res) {
     if (!cache.hasOwnProperty(token)) {
       continue;
     }
-    data.tokens.push(token);
+    var restSession = cache[token];
+    
+    data.tokens.push({
+      token: token,
+      creation: restSession.creation(),
+      modified: restSession.modified(),
+      size: restSession.values().length
+    });
     count++;
   }
 
