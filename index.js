@@ -148,14 +148,6 @@ module.exports = function (app, options) {
     var
       url = thisOptions.metricsUrl;
 
-    if (!url) {
-      thisOptions.metrics.url = url = METRICS_URL;
-
-      if (thisOptions.debug) {
-        console.log('adjust the metrics url to %s', METRICS_URL);
-      }
-    }
-
     if (thisOptions.debug) {
       console.log('register the GET: %s', url);
     }
