@@ -57,7 +57,7 @@ function _initialize(options) {
 
     if (req.restSession) {
       if (options.debug) {
-        console.debug('rest session is already created');
+        console.log('rest session is already created');
       }
       next();
       return
@@ -69,7 +69,7 @@ function _initialize(options) {
       // create a new token
       token = UUID();
       if (options.debug) {
-        console.debug('create new token %s', token);
+        console.log('create new token %s', token);
       }
     }
     // update the session token
@@ -102,7 +102,7 @@ function _handleMetrics(options, req, res) {
     };
 
   if (options.debug) {
-    console.debug('GET: %s (metrics from rest session)', options.metrics.url);
+    console.log('GET: %s (metrics from rest session)', options.metrics.url);
   }
 
   for (var token in cache) {
@@ -141,12 +141,12 @@ module.exports = function (app, options) {
       thisOptions.metrics.url = url = METRICS_URL;
 
       if (thisOptions.debug) {
-        console.debug('adjust the metrics url to %s', METRICS_URL);
+        console.log('adjust the metrics url to %s', METRICS_URL);
       }
     }
 
     if (thisOptions.debug) {
-      console.debug('register the GET: %s', url);
+      console.log('register the GET: %s', url);
     }
 
     app.get(url, function (req, res) {
