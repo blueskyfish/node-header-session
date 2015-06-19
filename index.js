@@ -60,7 +60,7 @@ function _initialize(options) {
         console.log('rest session is already created');
       }
       next();
-      return
+      return;
     }
 
     token = req.get(headerName);
