@@ -1,38 +1,42 @@
 
+BlueSkyFish &copy; 2015
+
 # Node Rest Header Session
 
 The middleware creates a simple session management via a HTTP header field that contains a token. This is for a stateless RESTful service.
 
 ## Usage
 
-	var
-		express = require('express'),
-		bodyParser = require('body-parser),
-		restHeader = require('node-rest-header-session');
+```js
+var
+	express = require('express'),
+	bodyParser = require('body-parser),
+	restHeader = require('node-rest-header-session');
 
-	var
-		app = express();
+var
+	app = express();
 
-	// register the middleware and the metrics request.
-	restHeader(app, {
-		name: 'x-this-is-a-restful-header-field',
-		debug: true,
-		metrics: {
-			enable: true,
-			url: '/metrics/rest-header'
-		}
+// register the middleware and the metrics request.
+restHeader(app, {
+	name: 'x-this-is-a-restful-header-field',
+	debug: true,
+	metrics: {
+		enable: true,
+		url: '/metrics/rest-header'
+	}
+});
+
+// every request
+app.get('/', function (req, res) {
+	var count = req.restSession.count || 0;
+
+	req.restSession.count = ++count;
+
+	res.send({
+		count: count
 	});
+});
 
-	// every request
-	app.get('/', function (req, res) {
-		var count = req.restSession.count || 0;
-
-		req.restSession.count = ++count;
-
-		res.send({
-			count: count
-		});
-	});
 
 ## Options
 
@@ -46,6 +50,16 @@ metrics.enable   | boolean  | Add a metrics url for the session values (**Defaul
 metrics.url      | string   | The url für the metrics information (**Default** `/metrics/rest-header`)
 
 
+## Routemap
+
+* add a timeout for the rest session
+* improve the metrics output
+* write tests
+* session values to a storage object  
+  * MemoryStorage
+  * FileStorage
+  * and more...
+* create a own token generator function
 
 
 
