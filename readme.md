@@ -51,8 +51,8 @@ Name             | Kind     | Description
 -----------------|----------|----------------------------------------------
 name             | string   | The header name for the session management (**Default** `x-rest-session-token`).
 debug            | boolean  | Show debug messages with `console.log` (**Default**: `true`).
-metrics.enable   | boolean  | Add a metrics url for the session values (**Default**: `false`).
-metrics.url      | string   | The url für the metrics information (**Default** `/metrics/rest-header`)
+metricsUrl       | string   | The url für the metrics information. (**Default**: undefined)
+genToken         | function | The function for generate the token uuid (**Default**: undefined)
 
 
 ## Routemap
