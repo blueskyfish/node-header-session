@@ -113,7 +113,7 @@ function _handleMetrics(options, req, res) {
     };
 
   if (options.debug) {
-    console.log('GET: %s (metrics from rest session)', options.metrics.url);
+    console.log('GET: %s (metrics from rest session)', options.metricsUrl);
   }
 
   for (var token in cache) {
