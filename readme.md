@@ -35,6 +35,11 @@ app.get('/', function (req, res) {
 		count: count
 	});
 });
+
+
+app.listen(3000, function () {
+	console.log('server is started...');
+});
 ```
 
 
