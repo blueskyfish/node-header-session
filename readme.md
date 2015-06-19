@@ -10,7 +10,6 @@ The middleware creates a simple session management via a HTTP header field that 
 ```js
 var
 	express = require('express'),
-	bodyParser = require('body-parser'),
 	restHeader = require('node-rest-header-session');
 
 var
@@ -46,7 +45,7 @@ The middleware will be configured with some options
 Name             | Kind     | Description
 -----------------|----------|----------------------------------------------
 name             | string   | The header name for the session management (**Default** `x-rest-session-token`).
-debug            | boolean  | Show debug messages with `console.debug` (**Default**: `true`).
+debug            | boolean  | Show debug messages with `console.log` (**Default**: `true`).
 metrics.enable   | boolean  | Add a metrics url for the session values (**Default**: `false`).
 metrics.url      | string   | The url für the metrics information (**Default** `/metrics/rest-header`)
 
