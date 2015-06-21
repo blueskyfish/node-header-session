@@ -1,7 +1,7 @@
 
 BlueSkyFish &copy; 2015
 
-![Node Header Session](logo.png)
+![Logo Node Header Session](logo.png)
 
 
 # Node Header Session
@@ -29,13 +29,13 @@ The tests are written with `mocha` and `chai`
 ```js
 var
 	express = require('express'),
-	restHeader = require('node-rest-header-session');
+	headerSession = require('node-header-session');
 
 var
 	app = express();
 
 // register the middleware and the metrics request.
-restHeader(app, {
+headerSession(app, {
 	name: 'x-this-is-a-restful-header-field',
 	debug: true,
 	metricsUrl: '/metrics/rest-header'
