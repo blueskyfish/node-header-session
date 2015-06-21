@@ -137,7 +137,7 @@ app.get('/products/:id', function (req, res) {
 * **Done** *calidation function*
 
 If an important feature is missing or you find an error, please create an Issue  
-<https://github.com/blueskyfish/node-rest-header-session/issues>
+<https://github.com/blueskyfish/node-header-session/issues>
 
 
 ## Dependencies
