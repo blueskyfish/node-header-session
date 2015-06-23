@@ -1,9 +1,16 @@
 
+# Jetbrains
 .idea/
-
 *.iml
 
-~*.*
+# VS Code
+.settings/
 
+# Node & Bower
 node_modules/
 bower_modules/
+npm-debug.log
+
+# Proxy
+.npmrc
+.bowerrc
