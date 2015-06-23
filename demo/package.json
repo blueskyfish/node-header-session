@@ -1,0 +1,12 @@
+{
+	"name": "node-header-session-demo",
+	"description": "A short demo for the middleware node-header-session",
+	"version": "0.0.0",
+	"author": "BlueSkyFish <blueskyfish@blueskyfish.de>",
+	"dependencies": {
+		"express": "4.12.4"
+	},
+	"scripts": {
+		"start": "node demo.js"
+	}
+}
