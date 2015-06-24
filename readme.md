@@ -1,6 +1,4 @@
 
-BlueSkyFish &copy; 2015
-
 ![Logo Node Header Session](logo.png)
 
 
@@ -147,7 +145,7 @@ app.get('/products/:id', function (req, res) {
 * add a timeout for the header session
 * improve the metrics output
 * **Done** write tests
-* session values to a storage engine  
+* **Done** session values to a storage engine  
   * **Done** *MemoryStorage*
   * FileStorage
   * and more...
@@ -157,6 +155,11 @@ app.get('/products/:id', function (req, res) {
 If an important feature is missing or you find an error, please create an Issue  
 <https://github.com/blueskyfish/node-header-session/issues>
 
+
+## Limitation
+
+In version [**0.3.x**](https://github.com/blueskyfish/node-header-session/releases/tag/v0.3.0)
+the metrics is dirty. 
 
 ## Dependencies
 
