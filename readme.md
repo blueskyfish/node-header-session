@@ -1,47 +1,73 @@
 
 BlueSkyFish &copy; 2015
 
-# Node Rest Header Session
+![Logo Node Header Session](logo.png)
+
+
+# Node Header Session
 
 The middleware creates a simple session management via a HTTP header field that contains a token. This is for a stateless RESTful service.
+
+## Installation
+
+### Setup
+
+	$ cd project/folder
+	$ git clone https://github.com/blueskyfish/node-header-session.git
+	$ cd node-header-session
+	$ npm install
+	
+### Test
+
+	$npm test
+
+The tests are written with `mocha` and `chai`
+	
 
 ## Usage
 
 ```js
 var
 	express = require('express'),
-	restHeader = require('node-rest-header-session');
+	headerSession = require('node-header-session');
 
 var
 	app = express();
 
 // register the middleware and the metrics request.
-restHeader(app, {
+headerSession(app, {
 	name: 'x-this-is-a-restful-header-field',
 	debug: true,
 	metricsUrl: '/metrics/rest-header'
 	genToken: function () {
 		return // generate a unique id / token (may UUID())
+	},
+	validToken = function (token) {
+		return true; // or "/test pattern/.test(token);
 	}
+	// storage (a session storage engine @see memory-storage.js
 });
 
-// every request
 app.get('/', function (req, res) {
-	var count = req.restSession.count || 0;
-
-	req.restSession.count = ++count;
-
-	res.send({
-		count: count
-	});
+	console.log('token %s', req.headerSession.token);
+	req.headerSession.getSession().then(
+		function (session) {
+			var
+				count = session.count || 0;
+			
+			session.count = ++count;
+			
+			res.send({
+				count: count
+			});
+		}
+	);
 });
-
 
 app.listen(3000, function () {
 	console.log('server is started...');
 });
 ```
-
 
 ## Options
 
@@ -49,24 +75,92 @@ The middleware will be configured with some options
 
 Name             | Kind     | Description
 -----------------|----------|----------------------------------------------
-name             | string   | The header name for the session management (**Default** `x-rest-session-token`).
+name             | string   | The header name for the session management (**Default** `x-session-token`).
 debug            | boolean  | Show debug messages with `console.log` (**Default**: `true`).
 metricsUrl       | string   | The url für the metrics information. (**Default**: undefined)
 genToken         | function | The function for generate the token uuid (**Default**: undefined)
+validToken       | function | The function for the validate of the token uuid (**Default**: undefined)
+storage          | object   | The storage engine for the session values. The Instance must have the two method **load** and **store**
+
+## Demo
+
+The demo webseite is in the folder `demo`. Start the demo app with the following commands
+
+	$ cd demo
+	$ npm install
+	$ npm start
+
+Open the Browser <http://localhost:3000>
+
+**Note**  
+If you wand to modified the demo app, then install [DefinitelyTyped](https://github.com/DefinitelyTyped/tsd).
+
+	$ tsd init
+	$ tsd install --save jquery
+
+**TODO**: add a screenshot from the demo app.
+
+
+## Storage Engine
+
+The session values can be saved in the memory or in a database table or in a NOSQL engine. If no storage
+is defined, then a memory storage will create.
+
+
+**Storage Interface**
+
+    Storage
+    + load(token: string): promise
+    + store(token: string, session: object): promise
+    + clear(): void // optional
+
+
+### Example for usage a header session:
+
+```js
+app.get('/products/:id', function (req, res) {
+	req.headerSession.getSession().then(
+		function (session) {
+			if (session.user.isLogin) {
+				// db.loadProduct returns also promise
+				//     product will process in the next step.
+				return db.loadProduct(req.params.id));
+			} else {
+				return Q.reject('user is not login');
+			}
+		}
+	).then(
+		function (product) {
+			res.send(product);
+		},
+		function (reason) {
+			console.log(reason);
+			res.sendStatus(404);
+		}
+	);
+});
+```
 
 
 ## Routemap
 
-* add a timeout for the rest session
+* add a timeout for the header session
 * improve the metrics output
-* write tests
-* session values to a storage object  
-  * MemoryStorage
+* **Done** write tests
+* session values to a storage engine  
+  * **Done** *MemoryStorage*
   * FileStorage
   * and more...
-* create a own token generator function
+* **Done** *create a own token generator function*
+* **Done** *calidation function*
 
-If an important feature is missing or you find an error, please create an Issue <https://github.com/blueskyfish/node-rest-header-session/issues>
+If an important feature is missing or you find an error, please create an Issue  
+<https://github.com/blueskyfish/node-header-session/issues>
+
+
+## Dependencies
+
+See in the file `package.json`
 
 
 ## License
