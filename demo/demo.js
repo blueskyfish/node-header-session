@@ -13,6 +13,8 @@ var
 var
 	app = express();
 
+app.use(express.static('static'));
+
 headerSession(app, {
 	name: 'x-demo-session-token',
 	debug: true
