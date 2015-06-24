@@ -9,8 +9,10 @@
 # Node & Bower
 node_modules/
 bower_modules/
+typings/
 npm-debug.log
 
 # Proxy
 .npmrc
 .bowerrc
+.tsdrc
