@@ -16,13 +16,13 @@ The middleware creates a simple session management via a HTTP header field that 
 	$ git clone https://github.com/blueskyfish/node-header-session.git
 	$ cd node-header-session
 	$ npm install
-
+	
 ### Test
 
 	$npm test
-	
-The tests are written with `mocha` and `chai`
 
+The tests are written with `mocha` and `chai`
+	
 
 ## Usage
 
@@ -69,7 +69,6 @@ app.listen(3000, function () {
 });
 ```
 
-
 ## Options
 
 The middleware will be configured with some options
@@ -83,6 +82,24 @@ genToken         | function | The function for generate the token uuid (**Defaul
 validToken       | function | The function for the validate of the token uuid (**Default**: undefined)
 storage          | object   | The storage engine for the session values. The Instance must have the two method **load** and **store**
 
+## Demo
+
+The demo webseite is in the folder `demo`. Start the demo app with the following commands
+
+	$ cd demo
+	$ npm install
+	$ npm start
+
+Open the Browser <http://localhost:3000>
+
+**Note**  
+If you wand to modified the demo app, then install [DefinitelyTyped](https://github.com/DefinitelyTyped/tsd).
+
+	$ tsd init
+	$ tsd install --save jquery
+
+**TODO**: add a screenshot from the demo app.
+
 
 ## Storage Engine
 
@@ -90,8 +107,9 @@ The session values can be saved in the memory or in a database table or in a NOS
 is defined, then a memory storage will create.
 
 
+**Storage Interface**
 
-    MemoryStorage
+    Storage
     + load(token: string): promise
     + store(token: string, session: object): promise
     + clear(): void // optional
