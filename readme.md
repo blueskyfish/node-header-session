@@ -184,7 +184,7 @@ The method `clear` remove all sessions.
 ## Routemap
 
 * add a timeout for the header session
-* improve the metrics output
+* **Done** improve the metrics output
 * **Done** write tests
 * **Done** session values to a storage engine  
   * **Done** *MemoryStorage*
