@@ -1,7 +1,7 @@
 {
   "name": "node-rest-header-session",
   "description": "",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "BlueSkyFish <blueskyfish@blueskyfish.de>",
   "main": "lib/index.js",
 	"scripts": {
