@@ -80,38 +80,6 @@ genToken         | function | The function for generate the token uuid (**Defaul
 validToken       | function | The function for the validate of the token uuid (**Default**: undefined)
 storage          | object   | The storage engine for the session values. The Instance must have the two method **load** and **store**
 
-## Demo
-
-The demo webseite is in the folder `demo`. Start the demo app with the following commands
-
-	$ cd demo
-	$ npm install
-	$ npm start
-
-Open the Browser <http://localhost:3000>
-
-**Note**  
-If you wand to modified the demo app, then install [DefinitelyTyped](https://github.com/DefinitelyTyped/tsd).
-
-	$ tsd init
-	$ tsd install --save jquery
-
-**TODO**: add a screenshot from the demo app.
-
-
-## Storage Engine
-
-The session values can be saved in the memory or in a database table or in a NOSQL engine. If no storage
-is defined, then a memory storage will create.
-
-
-**Storage Interface**
-
-    Storage
-    + load(token: string): promise
-    + store(token: string, session: object): promise
-    + clear(): void // optional
-
 
 ### Example for usage a header session:
 
@@ -140,6 +108,79 @@ app.get('/products/:id', function (req, res) {
 ```
 
 
+## Demo
+
+The demo webseite is in the folder `demo`. Start the demo app with the following commands
+
+	$ cd demo
+	$ npm install
+	$ npm start
+
+Open the Browser <http://localhost:3000>
+
+**Note**  
+If you wand to modified the demo app, then install [DefinitelyTyped](https://github.com/DefinitelyTyped/tsd).
+
+	$ tsd init
+	$ tsd install --save jquery
+
+**TODO**: add a screenshot from the demo app.
+
+
+## Storage Engine
+
+The session values can be saved in the memory or in a database table or in a NOSQL engine. If no storage
+is defined, then a memory storage will create.
+
+
+### Storage Interface
+
+    Storage
+    + load(token: string): promise
+    + store(token: string, session: object): promise
+	+ info(): promise
+    + clear(): void // optional
+
+#### load(token: string): promise
+  
+The method `load` try to load the session values from the storage. In case of success
+the promise callback returns the session values.
+
+	storage.load(token).then(function (session) {
+		// session values
+	});
+
+#### store(token: string, values: object): promise
+
+The method `store` try to store the session values into the storage. In case of sucess
+the promise callback returns the session values agian.
+
+	storage.store(token, sessionValues).then(function (session) {
+		// session values
+	});
+
+#### info(): promise
+
+The method `info` try to collect the session information. In case of sucess the promise
+callback returns a list of session info. The session info should contains the token,
+the creation and modified date.
+
+	storage.info().then(function (sessionInfoList) {
+		sessionInfoList.forEach(function (sessionInfo) {
+			console.log('%s (%s, %s)', sessionInfo.token,
+				sessionInfo.creation, sessionInfo.modified
+			);
+		});
+	}
+
+Note:  
+*The example is with the `MemoryStorage` class.*
+
+#### (optional) clear(): void
+
+The method `clear` remove all sessions.
+
+
 ## Routemap
 
 * add a timeout for the header session
@@ -155,11 +196,6 @@ app.get('/products/:id', function (req, res) {
 If an important feature is missing or you find an error, please create an Issue  
 <https://github.com/blueskyfish/node-header-session/issues>
 
-
-## Limitation
-
-In version [**0.3.x**](https://github.com/blueskyfish/node-header-session/releases/tag/v0.3.0)
-the metrics is dirty. 
 
 ## Dependencies
 
