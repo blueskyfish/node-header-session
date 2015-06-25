@@ -10,6 +10,7 @@ var
 	
 var
 	buttonCount,
+	buttonMetrics,
 	inputToken,
 	outputResult;
 
@@ -20,6 +21,10 @@ var HttpService = function () {
 
 HttpService.prototype.getCount = function () {
 	return this._get('/count');
+};
+
+HttpService.prototype.getMetrics = function () {
+	return this._get('/metrics/header-session');
 };
 
 HttpService.prototype.getToken = function () {
@@ -53,11 +58,10 @@ $(function () {
 	var
 		http = new HttpService();
 	
-	// iniitalize
 	buttonCount = $('#buttonCount');
+	buttonMetrics = $('#buttonMetrics');
 	inputToken = $('#inputToken');
 	outputResult = $('#outputResult');
-	
 	
 	
 	buttonCount.on('click', function (ev) {
@@ -67,4 +71,12 @@ $(function () {
 			}
 		);
 	});
+	
+	buttonMetrics.on('click', function (ev) {
+		http.getMetrics().done(
+			function (result) {
+				outputResult.html(JSON.stringify(result, null, 2));
+			}
+		)
+	})
 });

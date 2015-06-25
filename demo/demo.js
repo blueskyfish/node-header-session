@@ -17,7 +17,8 @@ app.use(express.static('static'));
 
 headerSession(app, {
 	name: 'x-demo-session-token',
-	debug: true
+	debug: true,
+	metricsUrl: '/metrics/header-session'
 });
 
 app.get('/count', function (req, res) {
