@@ -141,6 +141,11 @@ is defined, then a memory storage will create.
 	+ info(): promise
     + clear(): void // optional
 
+**Include Storage**
+
+* MemoryStorage
+* FileStorage
+
 #### load(token: string): promise
   
 The method `load` try to load the session values from the storage. In case of success
@@ -184,11 +189,11 @@ The method `clear` remove all sessions.
 ## Routemap
 
 * add a timeout for the header session
-* improve the metrics output
+* **Done** improve the metrics output
 * **Done** write tests
 * **Done** session values to a storage engine  
   * **Done** *MemoryStorage*
-  * FileStorage
+  * **Done** FileStorage
   * and more...
 * **Done** *create a own token generator function*
 * **Done** *calidation function*
