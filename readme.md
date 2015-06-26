@@ -178,10 +178,7 @@ the creation and modified date.
 		});
 	}
 
-Note:  
-*The example is with the `MemoryStorage` class.*
-
-#### (optional) clear(): void
+#### (optional) clear(): void | promise
 
 The method `clear` remove all sessions.
 
