@@ -19,13 +19,14 @@ app.use(express.static('static'));
 
 fileStorage.init({
   storagePath: 'file-storage',
-  blacklist: ['readme.md']
+  blacklist: ['test.md']
 }).then(
   function (pathname) {
     console.log('session stores in the directory %s', pathname);
   },
   function (reason) {
     console.log('error in session storage: ', reason);
+    process.exit(1);
   }
 );
 
@@ -57,12 +58,15 @@ function gracefulShutdown() {
     fileStorage.clear().then(
       function (result) {
         console.log('shutdown demo app: session storage is clean: ', result);
+        process.exit();
       },
       function (reason) {
-        console.log('shutdown demo app has an error: ', err);
+        console.log('shutdown demo app has an error: ', reason);
+        process.exit();
       }
     );
   }
+  return true;
 }
 
 // listen for TERM signal .e.g. kill 

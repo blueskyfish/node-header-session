@@ -2,7 +2,7 @@
  * Demo
  */
 
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 
 // constants
 var
@@ -11,6 +11,8 @@ var
 var
 	buttonCount,
 	buttonMetrics,
+	buttonDemo,
+	buttonNewToken,
 	inputToken,
 	outputResult;
 
@@ -29,6 +31,10 @@ HttpService.prototype.getMetrics = function () {
 
 HttpService.prototype.getToken = function () {
 	return this.token;
+};
+
+HttpService.prototype.removeToken = function () {
+	this.token = '';
 };
 
 HttpService.prototype._get = function (url) {
@@ -60,8 +66,18 @@ $(function () {
 	
 	buttonCount = $('#buttonCount');
 	buttonMetrics = $('#buttonMetrics');
+	buttonDemo = $('#buttonDemo');
+	buttonNewToken = $('#buttonNewToken');
 	inputToken = $('#inputToken');
 	outputResult = $('#outputResult');
+	
+	function _clickNewToken(ev) {
+		
+		http.removeToken();
+		inputToken.val('');
+		
+		return false;
+	}
 	
 	
 	buttonCount.on('click', function (ev) {
@@ -77,6 +93,10 @@ $(function () {
 			function (result) {
 				outputResult.html(JSON.stringify(result, null, 2));
 			}
-		)
-	})
+		);
+	});
+	buttonDemo.on('click', _clickNewToken);
+	buttonNewToken.on('click', _clickNewToken);
 });
+
+$(document).foundation();
