@@ -1,45 +1,88 @@
 <!doctype html>
-<html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
 <head>
-	<meta charset="UTF-8">
-	<title>Demo of node-header-session</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet" type="text/css">
-	<link href="app.css" rel="stylesheet" type="text/css">
+  <meta charset="UTF-8">
+  <title>node-header-session</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/normalize.min.css" rel="stylesheet" type="text/css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/app.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <link href="assets/favicon.gif" rel="favicon" type="image/gif">
 </head>
 <body>
-	
-<nav role="navigation">
-	<div class="container">
-		<h1>node-header-session</h1>
-	</div>
-</nav>
+
+<div class="fixed">
+  <nav class="top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+      <li class="name">
+        Node Header Session
+      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li><a href="#" data-reveal-id="aboutModal">About</a></li>
+      </ul>
+  
+      <!-- Left Nav Section -->
+      <ul class="left">
+        <li class="active"><a id="buttonDemo" href="#">Demo</a></li>
+      </ul>
+    </section>
+  </nav>
+ </div>
 
 <main role="content">
-	<div class="container">
-		<h1
-			<h2>Demo of node-header-session</h2>
-		<p>
-			Please click the button and see the output
-		</p>
-		<p>
-			<label>Token
-				<input type="text" name="inputToken" id="inputToken" readonly>
-			</label>
-		</p>
-		<p>
-			<button type="button" id="buttonCount">Increment</button>
-			<button type="button" id="buttonMetrics">Session Metrics</button>
-		</p>
-		<div>
-			<pre id="outputResult">
-			</pre>
-		</div>
-	</div>
+  <div class="container">
+    <h2>Demo of node-header-session</h2>
+    <div class="row">
+      <div class="small-12 medium-3 columns">
+        <img class="container-logo" src="assets/logo.png" width="180" height="180" alt="Node Header Session" title="Node Header Session">
+      </div>
+      <div class="small-12 medium-9 columns">
+        <p class="description">
+          This is the demo app to demonstrate the Node Header Session middleware.
+        </p>
+      </div>
+    </div>
+    <div class="row collapse">
+      <div class="small-9 columns">
+        <input type="text" name="inputToken" id="inputToken" readonly>
+      </div>
+      <div class="small-3 columns">
+        <a class="postfix button secondary" id="buttonNewToken" href="#">New Session</a>
+      </div>
+    </div>
+    <p>
+      <button type="button" id="buttonCount">Increment</button>
+      <button type="button" id="buttonMetrics">Session Metrics</button>
+    </p>
+    <div>
+      <pre id="outputResult">
+      </pre>
+    </div>
+  </div>
 </main>
 
+<div id="aboutModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Node Header Session</h2>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  <img class="container-logo" src="assets/logo.png" width="180" height="180" alt="Node Header Session" title="Node Header Session">
+  <address>
+    <p>BlueSkyFish<br>
+      blueskyfish(at)blueskyfish(dot)de<br>
+      <a href="http://blueskyfish.de">http://blueskyfish.de</a>
+    </p>
+  </address>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+<script src="assets/app.js"></script>
 
 </body>
 </html>
