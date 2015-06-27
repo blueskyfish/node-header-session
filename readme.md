@@ -20,7 +20,18 @@ The middleware creates a simple session management via a HTTP header field that 
 	$npm test
 
 The tests are written with `mocha` and `chai`
-	
+
+The project is programmed with [VS Code](https://www.visualstudio.com/en-us/products/code-vs.aspx). But you can use any other editor used.
+
+
+### DefinitelyTyped / tsd
+
+I use the [DefinitelyTyped / tsd](https://github.com/DefinitelyTyped/tsd) for autocomplete the api from external libraries.
+
+	$ npm install -g tsd
+	$ tsd install
+
+
 
 ## Usage
 
@@ -81,36 +92,10 @@ validToken       | function | The function for the validate of the token uuid (*
 storage          | object   | The storage engine for the session values. The Instance must have the two method **load** and **store**
 
 
-### Example for usage a header session:
-
-```js
-app.get('/products/:id', function (req, res) {
-	req.headerSession.getSession().then(
-		function (session) {
-			if (session.user.isLogin) {
-				// db.loadProduct returns also promise
-				//     product will process in the next step.
-				return db.loadProduct(req.params.id));
-			} else {
-				return Q.reject('user is not login');
-			}
-		}
-	).then(
-		function (product) {
-			res.send(product);
-		},
-		function (reason) {
-			console.log(reason);
-			res.sendStatus(404);
-		}
-	);
-});
-```
-
 
 ## Demo
 
-The demo webseite is in the folder `demo`. Start the demo app with the following commands
+The demo app is in the folder `demo`. Start the demo app with the following commands
 
 	$ cd demo
 	$ npm install
@@ -118,13 +103,9 @@ The demo webseite is in the folder `demo`. Start the demo app with the following
 
 Open the Browser <http://localhost:3000>
 
-**Note**  
-If you wand to modified the demo app, then install [DefinitelyTyped](https://github.com/DefinitelyTyped/tsd).
+![Screenshot from Demo app](demo-screenshot.png)
 
-	$ tsd init
-	$ tsd install --save jquery
-
-**TODO**: add a screenshot from the demo app.
+*Screenshot from Demo app*
 
 
 ## Storage Engine
@@ -138,13 +119,13 @@ is defined, then a memory storage will create.
     Storage
     + load(token: string): promise
     + store(token: string, session: object): promise
-	+ info(): promise
-    + clear(): void // optional
+	+ info(): promise  // optional
+    + clear(): void    // optional
 
 **Include Storage**
 
-* MemoryStorage
-* FileStorage
+* [MemoryStorage](#memory_storage_class) session values are in the memory cach of the application.
+* [FileStorage](file_storage_class) session values are stored in the filesystem.
 
 #### load(token: string): promise
   
@@ -182,6 +163,51 @@ the creation and modified date.
 
 The method `clear` remove all sessions.
 
+## <a name="memory_storage_class"></a>MemoryStorage
+
+* All sessions are stored in the memory of the application.
+* This storage is using only for testing or for the internal development.
+* The storage doesn't need to configure.
+* If no storage engine is specified when you configure the middleware, the Memory Storage is used automatically.
+
+**Inteface**
+
+	MemoryStorage
+	+ load(token: string): promise
+	+ store(token: string, values: object): promise
+	+ info(): promise;
+	+ clear(): void
+
+## <a name="file_storage_class"></a>FileStorage
+
+* All sessions are stored in the file system.
+* Before the storage can be used, it must be konfigueriert with the method `init`.
+
+**Configuration**
+
+Property          | Type         | Description
+------------------|--------------|----------------------------------------
+storagePath       | string       | The directory name for read and write the session values. The directory must be existed!
+blacklist         | Array<String>| Optional: Al list with the filenames in the storagePath, that are ignore.
+
+	var
+		storeage = require('./lib/file-storage');
+		
+	storage.init({
+		storagePath: '/tmp/path/for/write/and/read/sessionValues',
+		blacklist: ['readme.md', 'config.json']
+	});
+
+**Interface**
+
+	FileStorage
+	+ load(token: string): promise
+	+ store(token, values: object): promise
+	+ info(): promise;
+	+ appendblackList(blacklist: Array<String>): void;
+	+ clear(): promise
+
+
 
 ## Routemap
 
@@ -202,6 +228,15 @@ If an important feature is missing or you find an error, please create an Issue
 ## Dependencies
 
 See in the file `package.json`
+
+
+## Third Party Tools
+
+* [NodeJS](https://nodejs.org) or [io.js](https://iojs.org/)
+* [ExpressJS](http://expressjs.com/)
+* [VS Code](https://www.visualstudio.com/en-us/products/code-vs.aspx)
+* [DefinitelyTyped / tsd](https://github.com/DefinitelyTyped/tsd)
+
 
 
 ## License
