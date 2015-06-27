@@ -57,12 +57,15 @@ function gracefulShutdown() {
     fileStorage.clear().then(
       function (result) {
         console.log('shutdown demo app: session storage is clean: ', result);
+        process.exit();
       },
       function (reason) {
-        console.log('shutdown demo app has an error: ', err);
+        console.log('shutdown demo app has an error: ', reason);
+        process.exit();
       }
     );
   }
+  return true;
 }
 
 // listen for TERM signal .e.g. kill 
