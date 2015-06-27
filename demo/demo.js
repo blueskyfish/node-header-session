@@ -19,13 +19,14 @@ app.use(express.static('static'));
 
 fileStorage.init({
   storagePath: 'file-storage',
-  blacklist: ['readme.md']
+  blacklist: ['test.md']
 }).then(
   function (pathname) {
     console.log('session stores in the directory %s', pathname);
   },
   function (reason) {
     console.log('error in session storage: ', reason);
+    process.exit(1);
   }
 );
 
