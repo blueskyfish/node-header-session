@@ -1,3 +1,4 @@
+The middleware creates a simple session management via a HTTP header field that contains a token.
 
 ![Logo Node Header Session](logo.png)
 
