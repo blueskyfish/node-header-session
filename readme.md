@@ -90,8 +90,8 @@ name             | string   | The header name for the session management (**Defa
 debug            | boolean  | Show debug messages with `console.log` (**Default**: `true`).
 root             | string   | **required** The root path for the session handling the the header field.
 metricsUrl       | string   | The url für the metrics information. (**Default**: undefined)
-genToken         | function | The function for generate the token uuid (**Default**: undefined)
-validToken       | function | The function for the validate of the token uuid (**Default**: undefined)
+genToken         | function | The function for generate the token uuid (**Default**: use internal genToken function)
+validToken       | function | The function for the validate of the token uuid (**Default**: use internal validToken function)
 storage          | object   | The storage engine for the session values. The Instance must have the two method **load** and **store**
 
 
@@ -119,18 +119,16 @@ is defined, then a memory storage will create.
 
 ### Storage Interface
 
-    Storage
-    + load(token: string): promise
-    + store(token: string, session: object): promise
-	+ info(): promise  // optional
-    + clear(): void    // optional
+![Diagram of the included storages](storage-diagram.png)
 
 **Include Storage**
 
-* [MemoryStorage](#memory_storage_class) session values are in the memory cach of the application.
+* [MemoryStorage](#memory_storage_class) session values are in the memory cache of the application.
 * [FileStorage](file_storage_class) session values are stored in the filesystem.
 
 #### load(token: string): promise
+
+> Status: required
 
 The method `load` try to load the session values from the storage. In case of success
 the promise callback returns the session values.
@@ -141,6 +139,8 @@ the promise callback returns the session values.
 
 #### store(token: string, values: object): promise
 
+> Status: required
+
 The method `store` try to store the session values into the storage. In case of sucess
 the promise callback returns the session values agian.
 
@@ -149,6 +149,8 @@ the promise callback returns the session values agian.
 	});
 
 #### info(): promise
+
+> Status: optional
 
 The method `info` try to collect the session information. In case of sucess the promise
 callback returns a list of session info. The session info should contains the token,
@@ -162,7 +164,9 @@ the creation and modified date.
 		});
 	}
 
-#### (optional) clear(): void | promise
+#### clear(): promise
+
+> Status: optional
 
 The method `clear` remove all sessions.
 
