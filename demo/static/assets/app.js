@@ -7,7 +7,7 @@
 // constants
 var
 	HEADER_NAME = 'x-demo-session-token';
-	
+
 var
 	buttonCount,
 	buttonMetrics,
@@ -17,16 +17,16 @@ var
 	outputResult;
 
 var HttpService = function () {
-	
+
 	this.token = '';
 };
 
 HttpService.prototype.getCount = function () {
-	return this._get('/count');
+	return this._get('restful/count');
 };
 
 HttpService.prototype.getMetrics = function () {
-	return this._get('/metrics/header-session');
+	return this._get('/restful/header-session');
 };
 
 HttpService.prototype.getToken = function () {
@@ -40,7 +40,7 @@ HttpService.prototype.removeToken = function () {
 HttpService.prototype._get = function (url) {
 	var
 		_self = this;
-		
+
 	return $.ajax({
 		url: url,
 		beforeSend: function (xhr) {
@@ -63,23 +63,23 @@ HttpService.prototype._get = function (url) {
 $(function () {
 	var
 		http = new HttpService();
-	
+
 	buttonCount = $('#buttonCount');
 	buttonMetrics = $('#buttonMetrics');
 	buttonDemo = $('#buttonDemo');
 	buttonNewToken = $('#buttonNewToken');
 	inputToken = $('#inputToken');
 	outputResult = $('#outputResult');
-	
+
 	function _clickNewToken(ev) {
-		
+
 		http.removeToken();
 		inputToken.val('');
-		
+
 		return false;
 	}
-	
-	
+
+
 	buttonCount.on('click', function (ev) {
 		http.getCount().done(
 			function (result) {
@@ -87,7 +87,7 @@ $(function () {
 			}
 		);
 	});
-	
+
 	buttonMetrics.on('click', function (ev) {
 		http.getMetrics().done(
 			function (result) {
