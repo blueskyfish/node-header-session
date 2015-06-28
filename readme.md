@@ -15,7 +15,7 @@ The middleware creates a simple session management via a HTTP header field that 
 	$ git clone https://github.com/blueskyfish/node-header-session.git
 	$ cd node-header-session
 	$ npm install
-	
+
 ### Test
 
 	$npm test
@@ -48,7 +48,8 @@ var
 headerSession(app, {
 	name: 'x-this-is-a-restful-header-field',
 	debug: true,
-	metricsUrl: '/metrics/rest-header'
+	metricsUrl: '/metrics/rest-header',
+	root: '/restful-services',
 	genToken: function () {
 		return // generate a unique id / token (may UUID())
 	},
@@ -64,9 +65,9 @@ app.get('/', function (req, res) {
 		function (session) {
 			var
 				count = session.count || 0;
-			
+
 			session.count = ++count;
-			
+
 			res.send({
 				count: count
 			});
@@ -87,6 +88,7 @@ Name             | Kind     | Description
 -----------------|----------|----------------------------------------------
 name             | string   | The header name for the session management (**Default** `x-session-token`).
 debug            | boolean  | Show debug messages with `console.log` (**Default**: `true`).
+root             | string   | **required** The root path for the session handling the the header field.
 metricsUrl       | string   | The url für the metrics information. (**Default**: undefined)
 genToken         | function | The function for generate the token uuid (**Default**: undefined)
 validToken       | function | The function for the validate of the token uuid (**Default**: undefined)
@@ -129,7 +131,7 @@ is defined, then a memory storage will create.
 * [FileStorage](file_storage_class) session values are stored in the filesystem.
 
 #### load(token: string): promise
-  
+
 The method `load` try to load the session values from the storage. In case of success
 the promise callback returns the session values.
 
@@ -193,7 +195,7 @@ blacklist         | Array<String>| Optional: Al list with the filenames in the s
 
 	var
 		storeage = require('./lib/file-storage');
-		
+
 	storage.init({
 		storagePath: '/tmp/path/for/write/and/read/sessionValues',
 		blacklist: ['readme.md', 'config.json']
