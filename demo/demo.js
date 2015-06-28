@@ -1,9 +1,9 @@
 /**
  * Demo App for middleware "node-header-session"
  */
- 
+
  'use strict';
- 
+
 var
   express = require('express');
 
@@ -19,7 +19,7 @@ app.use(express.static('static'));
 
 fileStorage.init({
   storagePath: 'file-storage',
-  blacklist: ['test.md']
+  blacklist: ['.gitignore']
 }).then(
   function (pathname) {
     console.log('session stores in the directory %s', pathname);
@@ -33,12 +33,13 @@ fileStorage.init({
 headerSession(app, {
   name: 'x-demo-session-token',
   debug: true,
+  root: '/restful',
   storage: fileStorage,
-  metricsUrl: '/metrics/header-session'
+  metricsUrl: '/restful/header-session'
 });
 
-app.get('/count', function (req, res) {
-  
+app.get('/restful/count', function (req, res) {
+
   req.headerSession.getSession().then(function (session) {
     console.log('count: receive session: ', session);
     var count = session.count || 0;
@@ -69,10 +70,8 @@ function gracefulShutdown() {
   return true;
 }
 
-// listen for TERM signal .e.g. kill 
+// listen for TERM signal .e.g. kill
 process.on ('SIGTERM', gracefulShutdown);
 
 // listen for INT signal e.g. Ctrl-C
-process.on ('SIGINT', gracefulShutdown);   
-
-   
+process.on ('SIGINT', gracefulShutdown);
